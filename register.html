@@ -118,31 +118,44 @@
     const form = document.querySelector('form')
     const inputEmail = document.querySelector('#input-email')
     const inputPassword = document.querySelector('#input-password')
+    const hideDom = document.querySelector('.bi-eye-fill')
 
     btnRegister.addEventListener('click', async function () {
       const data = serialize(form, { hash: true, empty: true })
-      if (data.username.length < 2) {
-        return getToast('用户名不能小于2位')
-      }
 
-      if (data.password.length < 6) {
-        return getToast('密码不能小于6位')
+      if(!(verify(inputEmail, /^[a-zA-Z0-9_-]{2,}$/, '用户名最少2位') && verify(inputPassword, /^[a-zA-Z0-9_-]{6,}$/, '密码最少6位'))){
+        verify(inputPassword, /^[a-zA-Z0-9_-]{6,}$/, '密码最少6位')
+         verify(inputEmail, /^[a-zA-Z0-9_-]{2,}$/, '用户名最少2位')
+        return
       }
-
-     try {
-       const { data: res } = await axios.post('/register', data)
-       getToast(res.message)
-       setTimeout(function () {
-         location.href = './login.html'
-       }, 1000)
-     } catch (error) {
+      try {
+        const { data: res } = await axios.post('/register', data)
+        getToast(res.message)
+        setTimeout(function () {
+          location.href = './login.html'
+        }, 1000)
+      } catch (error) {
         getToast(error.response.data.message)
-     }
+      }
     })
 
-    function verify(ele, reg, msg) {
-      const result = reg.test(ele.value)
-    }
+    inputEmail.addEventListener('change', function () {
+      verify(this, /^[a-zA-Z0-9_-]{2,}$/, '用户名最少2位')
+    })
+    inputPassword.addEventListener('change',function(){
+      verify(this, /^[a-zA-Z0-9_-]{6,}$/, '密码最少6位')
+    })
+
+    hideDom.addEventListener('click',function(){
+      console.log(1)
+        if(inputPassword.type === 'password'){
+          inputPassword.type = 'text'
+        }else {
+          inputPassword.type = 'password'
+        }
+    })
+
   </script>
 </body>
+
 </html>
