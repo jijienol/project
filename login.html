@@ -109,6 +109,9 @@
       }
       try {
         const { data: res } = await axios.post('/login', data)
+        console.log(res)
+        localStorage.setItem('token',res.data.token)
+        localStorage.setItem('userName',res.data.username)
         getToast(res.message)
         setTimeout(function () {
           location.href = './index.html'
