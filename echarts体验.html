@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <div id="main1" style="width: 600px;height:400px;"></div>
+    <script src="./lib/echarts.min.js"></script>
+    <script>
+        (function () {
+
+            // 基于准备好的dom，初始化echarts实例
+            let myChart = echarts.init(document.querySelector('#main'));
+
+            // 指定图表的配置项和数据
+            let option = {
+                title: {
+                    text: '动物世界'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['体重', '攻击力']
+                },
+                xAxis: {
+                    data: ['牛', '羊', '猪', '狗', '猫', '狼']
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: '体重',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 44, 20]
+                    },
+                    {
+                        name: '攻击力',
+                        type: 'line',
+                        data: [10, 20, 36, 40, 50, 55]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        })()
+
+
+          function two(){
+             // 基于准备好的dom，初始化echarts实例
+              let myChart = echarts.init(document.querySelector('#main1'));
+              // 指定图表的配置项和数据
+              let option = {
+                  title: {
+                      text: '我是大石坝',
+                      link: 'http://www.baidu.com',
+                      textStyle: {
+                          color: 'red',
+                          fontWeight: 'bolder',
+                          fontSize: 28
+                      },
+                      left: 'center',
+                      top: '20'
+                  },
+                  tooltip: {
+                      trigger: 'axis'
+                  },
+                  legend: {
+                      bottom: 15,
+                      data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+                  },
+                  grid: {
+                      left: '0%',
+                      right: '2%',
+                      bottom: '8%',
+                      containLabel: true
+                  },
+                  xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月']
+                  },
+                  yAxis: {
+                      type: 'value'
+                  },
+                  series: [
+                      {
+                          name: 'Email',
+                          type: 'bar',
+                          data: [120, 132, 101, 134, 90, 230, 210]
+                      },
+                      {
+                          name: 'Union Ads',
+                          type: 'bar',
+                          data: [220, 182, 191, 234, 290, 330, 310]
+                      },
+                      {
+                          name: 'Video Ads',
+                          type: 'bar',
+                          data: [150, 232, 201, 154, 190, 330, 410]
+                      },
+                      {
+                          name: 'Direct',
+                          type: 'bar',
+                          data: [320, 332, 301, 334, 390, 330, 320]
+                      },
+                      {
+                          name: 'Search Engine',
+                          type: 'bar',
+                          data: [820, 932, 901, 934, 1290, 1330, 1320]
+                      }
+                  ]
+              };
+              // 使用刚指定的配置项和数据显示图表。
+              myChart.setOption(option);
+          }
+          two()
+    </script>
+</body>
+
+</html>
