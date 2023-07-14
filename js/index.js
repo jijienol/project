@@ -8,8 +8,8 @@ window.addEventListener('DOMContentLoaded', async function () {
     for (let key in res.data.overview) {
         window.document.querySelector(`span[name = ${key}]`).innerHTML = res.data.overview[key]
     }
-    const {data : {year}} = res
-    const {data : {salaryData}} = res
+    const { data: { year } } = res
+    const { data: { salaryData } } = res
     console.log(year);
     console.log(salaryData);
     // console.log(year)
@@ -18,11 +18,11 @@ window.addEventListener('DOMContentLoaded', async function () {
         let myChart = echarts.init(document.querySelector('#line'));
         // 指定图表的配置项和数据
         let option = {
-            grid:{
-                left : '3%',
-                right : '3%',
-                top : '20%',
-                bottom : '3%',
+            grid: {
+                left: '3%',
+                right: '3%',
+                top: '20%',
+                bottom: '3%',
                 containLabel: true
             },
             title: {
@@ -97,12 +97,7 @@ window.addEventListener('DOMContentLoaded', async function () {
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     })();
-    (function(){
-        // let one =  salaryData.map(item => { 1, 1 })
-        let one = salaryData.map(function ({ label, b_count }) {
-            return { label, b_count }
-        })
-        console.log(one)
+    (function renderClassSalary() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = echarts.init(document.querySelector('#salary'));
 
@@ -110,8 +105,8 @@ window.addEventListener('DOMContentLoaded', async function () {
         let option = {
             title: {
                 text: '班级薪资分布',
-                top:10,
-                left:10,
+                top: 10,
+                left: 10,
                 fontStyle: {
                     fontSize: 14
                 },
@@ -150,8 +145,8 @@ window.addEventListener('DOMContentLoaded', async function () {
                     },
                     color: ['#faa22d', '#5b97fd', '#4bbcf9', '#3ed39b'],
 
-                    data: salaryData.map(({label,b_count,g_count}) =>({value:b_count+g_count,name:label})
-)
+                    data: salaryData.map(({ label, b_count, g_count }) => ({ value: b_count + g_count, name: label })
+                    )
 
                     // data: [
                     //     { value: 1048, name: 'Search Engine' },
@@ -165,4 +160,87 @@ window.addEventListener('DOMContentLoaded', async function () {
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     })();
+    console.log(res.data.groupData)
+    renderGroupSalary(res.data.groupData['1'])
+    this.document.querySelector('#btns').addEventListener('click', function (e) {
+        if (e.target.tagName === 'BUTTON') {
+            document.querySelector('.btn-blue').classList.remove('btn-blue')
+            e.target.classList.add('btn-blue')
+            renderGroupSalary(res.data.groupData[e.target.innerHTML])
+        }
+
 })
+})
+
+function renderGroupSalary(groupData) {
+    console.log(groupData)
+    // 基于准备好的dom，初始化echarts实例
+    let myChart = echarts.init(document.querySelector('#lines'));
+    // 指定图表的配置项和数据
+    let option = {
+        grid: {
+            left: '3%',
+            right: '3%',
+            top: '20%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            // data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月'],
+            data : groupData.map(item => item.name),
+            axisLabel: {
+                color: '#3c3c3c'
+            }
+        },
+        yAxis: {
+            type: 'value',
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        color: [{
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [{
+                offset: 0, color: '#45d49f' // 0% 处的颜色
+            }, {
+                offset: 1, color: '#d0f4e6' // 100% 处的颜色
+            }],
+            global: false // 缺省为 false
+        }, {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                    offset: 0, color: '#58a1ee' // 0% 处的颜色
+                }, {
+                    offset: 1, color: '#d7e8fa' // 100% 处的颜色
+                }],
+                global: false // 缺省为 false
+            }],
+        tooltip:{},
+        series: [
+            {
+                name: '期望薪资',
+                type: 'bar',
+                data: groupData.map(item => item.hope_salary),
+            },
+            {
+                name: '实际薪资',
+                type: 'bar',
+                data: groupData.map(item => item.salary),
+
+            },
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
