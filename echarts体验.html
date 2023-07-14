@@ -20,26 +20,50 @@
             // 指定图表的配置项和数据
             let option = {
                 title: {
-                    text: '动物世界'
+                    text: '班级薪资分布',
+                    fontStyle: {
+                        fontSize: 14
+                    },
                 },
-                tooltip: {},
+                tooltip: {
+                    trigger: 'item'
+                },
                 legend: {
-                    data: ['体重', '攻击力']
+                    bottom: '5%',
+                    left: 'center'
                 },
-                xAxis: {
-                    data: ['牛', '羊', '猪', '狗', '猫', '狼']
-                },
-                yAxis: {},
                 series: [
                     {
-                        name: '体重',
-                        type: 'bar',
-                        data: [5, 20, 36, 10, 44, 20]
-                    },
-                    {
-                        name: '攻击力',
-                        type: 'line',
-                        data: [10, 20, 36, 40, 50, 55]
+                        name: '班级薪资分布',
+                        type: 'pie',
+                        radius: ['40%', '50%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: false,
+                                fontSize: 40,
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        color: ['#faa22d', '#5b97fd', '#4bbcf9', '#3ed39b'],
+                        data: [
+                            { value: 1048, name: 'Search Engine' },
+                            { value: 735, name: 'Direct' },
+                            { value: 580, name: 'Email' },
+                            { value: 484, name: 'Union Ads' },
+                        ]
                     }
                 ]
             };
