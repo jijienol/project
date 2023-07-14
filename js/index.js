@@ -169,11 +169,72 @@ window.addEventListener('DOMContentLoaded', async function () {
             renderGroupSalary(res.data.groupData[e.target.innerHTML])
         }
 
-})
+    });
+    // 男女薪资分布
+    (function(){
+        // 基于准备好的dom，初始化echarts实例
+        let myChart = echarts.init(document.querySelector('#gender'));
+        // 指定图表的配置项和数据
+        let option = {
+            title: [{
+                text: '男女薪资分布',
+                left: 10,
+                top: 10
+            }, {
+                text: '男',
+                textStyle: {
+                    fontSize: 14
+                },
+                left: 'center',
+                top: '45%'
+            }, {
+                text: '女',
+                textStyle: {
+                    fontSize: 14
+                },
+                left: 'center',
+                bottom: '5%'
+            }],
+            tooltip: {
+                trigger: 'item'
+            },
+            color: ['#faa22d', '#5b97fd', '#4bbcf9', '#3ed39b'],
+            series: [
+                {
+                    name: '男生薪资分布',
+                    type: 'pie',
+                    center: ['50%', '25%'],
+                    radius: ['15%', '23%'],
+                    // data: [
+                    //     { value: 1048, name: 'Search Engine' },
+                    //     { value: 735, name: 'Direct' },
+                    //     { value: 580, name: 'Email' },
+                    //     { value: 484, name: 'Union Ads' },
+                    // ],
+                    data : salaryData.map(item => ({value:item.b_count,name:item.label}))
+                },
+                {
+                    name: '女生薪资分布',
+                    type: 'pie',
+                    radius: ['15%', '23%'],
+                    center: ['50%', '70%'],
+                    // data: [
+                    //     { value: 1048, name: 'Search Engine' },
+                    //     { value: 735, name: 'Direct' },
+                    //     { value: 580, name: 'Email' },
+                    //     { value: 484, name: 'Union Ads' },
+                    // ],
+                    data: salaryData.map(item => ({ value: item.g_count, name: item.label }))
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    })()
+
 })
 
 function renderGroupSalary(groupData) {
-    console.log(groupData)
     // 基于准备好的dom，初始化echarts实例
     let myChart = echarts.init(document.querySelector('#lines'));
     // 指定图表的配置项和数据
