@@ -202,3 +202,4 @@ document.querySelector('select[name=city]').addEventListener('change',async func
     // console.log(areaStr)
     document.querySelector('select[name=area]').innerHTML = `<option value="">--区--</option>` + areaStr
 })
+// github
