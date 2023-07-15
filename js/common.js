@@ -71,5 +71,8 @@ axios.interceptors.response.use(function (response) {
     localStorage.removeItem('userName')
     location.href = './login.html'
   }
+  if (error.response.status === 401){
+    
+  }
   return Promise.reject(error);
 });
